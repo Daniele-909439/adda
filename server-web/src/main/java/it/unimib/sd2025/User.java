@@ -8,7 +8,7 @@ public class User{
     private String social_security_number;
     private double balance;
 
-    // necessari ? 
+    // necessari ?
     private int used_vouchers;
     private int available_vouchers;
 

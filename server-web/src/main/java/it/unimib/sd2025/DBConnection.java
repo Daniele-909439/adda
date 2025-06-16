@@ -26,7 +26,7 @@ import java.net.Socket;
 // manage connection with the database
 public class DBConnection{
 
-    private final String address = "127.0.0.1";
+    private final String address = "localhost";
     private final int port = 3030;
 
    // non serve il costruttore senza parametri (? ereditato da OBJ ?)
@@ -36,11 +36,14 @@ public class DBConnection{
     try(var socket = new Socket(address, port);
         Scanner scanner = new Scanner(socket.getInputStream())) {
 
+            message += "\n\r";
             // invio il messaggio
+            System.out.println("Sending Message");
             var output = socket.getOutputStream();
             output.write(message.getBytes());
 
             // aspetto risposta del db
+            System.out.println("Waiting for response");
             String response = scanner.nextLine();
             return response;
         }catch (Exception ex) {
@@ -59,3 +62,4 @@ public class DBConnection{
         return Response.ok(message).build();
    }
 }
+

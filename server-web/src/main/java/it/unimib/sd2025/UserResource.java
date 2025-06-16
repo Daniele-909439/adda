@@ -53,10 +53,20 @@ public class UserResource {
             return Response.status(Status.BAD_REQUEST).build();
         }
 
-        connection = new DBConnection();
-        String message = "SET " + user.getId() + " " + user;
-        connection.sendMessage(message);
+        var jsonb = JsonbBuilder.create();
+        String usr = null;
+        try {
+            usr = jsonb.toJson(user, User.class);
+            
+        } catch (JsonbException e) {
+                return Response.status(Status.BAD_REQUEST).build();
+        }
 
-        return Response.ok().build();
+        System.out.println(usr);
+        connection = new DBConnection();
+        String message = "SET " + user.getId() + " " + usr;
+        String response = connection.sendMessage(message);
+
+        return Response.ok(response).build();
     }
 }
